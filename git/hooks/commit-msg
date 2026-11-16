@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Commit-msg hook — rejects AI attribution in the commit message.
+# Commit-msg hook — rejects AI attribution and non-conventional subjects in the commit message.
 # Install: make setup/hooks
 # CI runs the same file against every commit in a pull request (make check/attribution).
 #
@@ -41,5 +41,18 @@ if [[ -n "${matched}" ]]; then
   printf '%s' "${matched}"
   echo ""
   echo "Remove those lines and commit again."
+  exit 1
+fi
+
+# Conventional commits: type(scope)?: subject. Merge, revert and autosquash subjects are exempt.
+subject="$(printf '%s\n' "${subject_and_body}" | sed -n '1p')"
+exempt='^(Merge |Revert |fixup! |squash! )'
+conventional='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9._/-]+\))?!?: .+'
+if ! grep -qE "${exempt}" <<<"${subject}" && ! grep -qE "${conventional}" <<<"${subject}"; then
+  echo ""
+  echo "❌ The subject is not a conventional commit: ${subject}"
+  echo ""
+  echo "Use type(scope): subject, with type one of feat, fix, docs, style, refactor, perf, test, build, ci,"
+  echo "chore or revert. Example: feat(skills): vendor mattpocock/skills"
   exit 1
 fi
