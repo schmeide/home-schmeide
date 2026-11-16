@@ -4,7 +4,7 @@ SCHMEIDE_DIR ?= $(HOME)/github/schmeide
 PUBLIC_REPOS := schmeide.app schmeide.com template iac
 
 .DEFAULT_GOAL := help
-.PHONY: help setup setup/repos setup/hooks check/attribution
+.PHONY: help setup setup/repos setup/hooks check/attribution skills/update
 
 help: ## List every target
 	@grep -E '^[a-zA-Z/_-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  %-22s %s\n", $$1, $$2}'
@@ -29,3 +29,6 @@ setup/hooks: ## Install the commit-msg hook that rejects AI attribution
 
 check/attribution: ## Fail if a pull request carries AI attribution (PR=<n>)
 	"$(ROOT)/scripts/check_attribution.sh" "$(PR)"
+
+skills/update: ## Vendor jakubkrehel/skills at REF into .claude/skills, or into DEST
+	"$(ROOT)/scripts/vendor_skills.sh" "$(REF)" $(DEST)
