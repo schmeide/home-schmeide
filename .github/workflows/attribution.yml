@@ -1,0 +1,22 @@
+name: Attribution
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  check-attribution:
+    name: Check for AI attribution
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+
+      - name: Check for AI attribution
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: make check/attribution PR=${{ github.event.pull_request.number }}
