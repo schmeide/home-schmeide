@@ -5,6 +5,30 @@ Schmeide repo. Each repo keeps its own code, history, issues and AGENTS.md.
 
 `CLAUDE.md` only imports this file. Edit `AGENTS.md`, never `CLAUDE.md`.
 
+## What Schmeide is
+
+Schmeide is a software factory. A person describes an app, reviews a plain-language spec, approves it, and an agent
+builds the app from a fixed template, checks it and deploys it. **schmeide.app is the main product.** The other repos
+support it:
+
+- `template` is the stack every app schmeide.app generates is copied from.
+- `iac` is the Azure infrastructure it runs on.
+- `schmeide.com` is the marketing site.
+- `project` holds the planning: product vision, architecture decisions, research and funding.
+
+Where to look when a question doesn't name a repo:
+
+| The question is about                                              | Look in         |
+| ------------------------------------------------------------------ | --------------- |
+| The product, its UI, the server, how builds run, "the app"         | `schmeide.app`  |
+| The stack, or what every generated app contains                    | `template`      |
+| Hosting, Azure, Terraform, Argo CD, deploys                        | `iac`           |
+| The marketing site, landing page, public copy                      | `schmeide.com`  |
+| Why something was decided, the vision, research, what's planned    | `project`       |
+| How agents work across Schmeide, shared skills, commit and PR rules | this repo       |
+
+Default to `schmeide.app` when it is unclear. Read that repo's AGENTS.md first.
+
 ## Setup
 
 Local checkouts mirror GitHub: `~/github/schmeide/<repo>`, with this repo at `~/github/schmeide/home-schmeide`.
@@ -82,7 +106,7 @@ Commits and pull requests are authored by the person running the agent, in this 
 
 - project (planning and knowledge base: product, engineering, decisions; an Open Knowledge Format bundle; private):
   `~/github/schmeide/project`. Clone from `git@github.com:schmeide/project.git` if missing. Read its `index.md` first.
-- schmeide.app (the software factory: React UI plus a tRPC server that builds apps from `template`):
+- schmeide.app (the main product; the software factory: React UI plus a tRPC server that builds apps from `template`):
   `~/github/schmeide/schmeide.app`. Clone from `https://github.com/schmeide/schmeide.app.git` if missing. Start with
   `docs/mvp.md`.
 - template (the fixed full-stack TypeScript stack every generated project is copied from): `~/github/schmeide/template`.
