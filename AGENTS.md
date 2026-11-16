@@ -52,6 +52,22 @@ Where the skills come from:
 - Update with `make skills/update REF=<commit>`. Pass `DEST=<repo>/.claude/skills` to vendor the same commit into
   another repo, then commit it there on its own branch. Keep every repo on the same commit.
 
+## Engineering skills from mattpocock/skills
+
+This repo vendors the skills in [mattpocock/skills](https://github.com/mattpocock/skills)' Claude Code plugin
+(`skills/engineering` and `skills/productivity`) in `.claude/skills/`, next to the design skills, so every session
+started here has them: `grill-me`, `grill-with-docs`, `tdd`, `to-spec`, `to-tickets`, `diagnosing-bugs`, `triage`,
+`code-review`, `handoff` and the rest. `/ask-matt` says which one fits.
+
+- The upstream commit is in `.claude/skills/UPSTREAM_COMMIT_MATTPOCOCK` and the MIT license in
+  `.claude/skills/LICENSE-mattpocock`. The `misc` and `in-progress` skills and the per-agent `agents/` folders are
+  left out.
+- Update with `make skills/update-pocock REF=<commit>`. Pass `DEST=<repo>/.claude/skills` to vendor the same commit
+  into another repo.
+- Where one of these skills asks for a ticket or PR, this file's rules still win: state the ticket's difficulty, and
+  add no AI attribution.
+- Do not also install the `mattpocock-skills` plugin on a machine that works here, or every skill appears twice.
+
 ## No AI attribution
 
 Commits and pull requests are authored by the person running the agent, in this repo and in every repo below. No
