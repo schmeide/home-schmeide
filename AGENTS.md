@@ -22,6 +22,36 @@ Local checkouts mirror GitHub: `~/github/schmeide/<repo>`, with this repo at `~/
 - Record decisions and research that cut across repos in `project`.
 - When writing a ticket, state its difficulty (hard, standard or mechanical) with a one-line reason. Do not name a model.
 
+## Frontend work uses the design skills
+
+All frontend work in Schmeide is designed and built with the skills from
+[jakubkrehel/skills](https://github.com/jakubkrehel/skills). That covers every UI in `template`, the schmeide.app UI,
+schmeide.com, and every app a schmeide.app worker generates. If a change touches anything a person sees (markup,
+styles, components, copy, motion), use the skills for it:
+
+| Work                                 | Skills                                                                        |
+| ------------------------------------ | ----------------------------------------------------------------------------- |
+| Building from a Figma file or image  | `build-design`                                                                |
+| Layout, type, color and polish       | `better-layout`, `better-typography`, `better-colors`, `better-ui`            |
+| Copy                                 | `better-writing`                                                              |
+| Exploring directions for a component | `variant`, `state-machine`, `break`                                           |
+| The accessibility pass               | `better-accessibility`                                                        |
+| Reviewing a screen or flow           | `better-interface`                                                            |
+| Before opening a UI pull request     | `interface-review`                                                            |
+
+`interface-review`, `variant`, `state-machine`, `break`, `afk` and `explain-interface` only start from a slash command a
+person types. An agent working on its own reads that skill's `SKILL.md` and follows it instead.
+
+Where the skills come from:
+
+- This repo vendors all of them in `.claude/skills/`, so every session started here has them. The upstream commit is
+  in `.claude/skills/UPSTREAM_COMMIT` and the MIT license in `.claude/skills/LICENSE`. Only the Markdown is copied.
+- `template` vendors them in its own `.claude/skills/`. Every generated project is copied from `template`, so every
+  schmeide.app worker has them by default. The worker's tool list must include `Skill`.
+- schmeide.com vendors its own subset in `.claude/skills/`.
+- Update with `make skills/update REF=<commit>`. Pass `DEST=<repo>/.claude/skills` to vendor the same commit into
+  another repo, then commit it there on its own branch. Keep every repo on the same commit.
+
 ## No AI attribution
 
 Commits and pull requests are authored by the person running the agent, in this repo and in every repo below. No
