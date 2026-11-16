@@ -4,7 +4,7 @@ SCHMEIDE_DIR ?= $(HOME)/github/schmeide
 PUBLIC_REPOS := schmeide.app schmeide.com template iac
 
 .DEFAULT_GOAL := help
-.PHONY: help setup setup/repos setup/hooks check/attribution skills/update
+.PHONY: help setup setup/repos setup/hooks check/attribution skills/update skills/update-pocock
 
 help: ## List every target
 	@grep -E '^[a-zA-Z/_-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  %-22s %s\n", $$1, $$2}'
@@ -32,3 +32,6 @@ check/attribution: ## Fail if a pull request carries AI attribution (PR=<n>)
 
 skills/update: ## Vendor jakubkrehel/skills at REF into .claude/skills, or into DEST
 	"$(ROOT)/scripts/vendor_skills.sh" "$(REF)" $(DEST)
+
+skills/update-pocock: ## Vendor mattpocock/skills at REF into .claude/skills, or into DEST
+	"$(ROOT)/scripts/vendor_pocock_skills.sh" "$(REF)" $(DEST)
