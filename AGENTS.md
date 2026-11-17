@@ -46,6 +46,22 @@ Local checkouts mirror GitHub: `~/github/schmeide/<repo>`, with this repo at `~/
 - Record decisions and research that cut across repos in `project`.
 - When writing a ticket, state its difficulty (hard, standard or mechanical) with a one-line reason. Do not name a model.
 
+## Backend work follows the existing patterns
+
+The architecture and layout James Orson set up in `schmeide.app`, `template` and `iac` is the standard. Treat it as
+the design to imitate. Before any backend change (server, tRPC routers, build pipeline, data layer, infrastructure):
+
+1. Find the closest existing example in the repo: a router, service, job, module or Terraform stack that does
+   something similar.
+2. Read it and the code around it until you can name its conventions: directory layout, file naming, how modules are
+   split, how errors, config, logging and tests are handled.
+3. Build the change the same way, in the same places, with the same shapes. A new router looks like the existing
+   routers; a new module sits where its siblings sit.
+
+When nothing similar exists yet, extend the nearest pattern rather than inventing a new one, and say in the pull
+request which pattern you followed. If a pattern looks wrong for the job, raise it in the pull request or an issue
+before departing from it.
+
 ## Frontend work uses the design skills
 
 All frontend work in Schmeide is designed and built with the skills from
