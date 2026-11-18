@@ -26,6 +26,7 @@ Where to look when a question doesn't name a repo:
 | The marketing site, landing page, public copy                      | `schmeide.com`  |
 | Why something was decided, the vision, research, what's planned    | `project`       |
 | How agents work across Schmeide, shared skills, commit and PR rules | this repo       |
+| The autobutler-org factory (Go, Postgres, Kubernetes workers)      | `factory`       |
 
 Default to `schmeide.app` when it is unclear. Read that repo's AGENTS.md first.
 
@@ -33,9 +34,10 @@ Default to `schmeide.app` when it is unclear. Read that repo's AGENTS.md first.
 
 Local checkouts mirror GitHub: `~/github/schmeide/<repo>`, with this repo at `~/github/schmeide/home-schmeide`.
 
-- `make setup` installs the commit-msg hook and clones every missing public repo into `~/github/schmeide`
-  (override with `SCHMEIDE_DIR=...`).
-- `project` is private: `gh repo clone schmeide/project ~/github/schmeide/project`.
+- `make setup` installs the commit-msg hook and clones every missing repo in the Makefile's `REPOS` into
+  `~/github/schmeide` (override with `SCHMEIDE_DIR=...`). It skips repos already cloned.
+- It clones with `gh` when `gh` is logged in, and with `git` over HTTPS otherwise. `project` is private, so log in with
+  `gh auth login` first or that clone fails.
 - `make help` lists every target.
 
 ## Working across repos
@@ -140,6 +142,10 @@ Commits and pull requests are authored by the person running the agent, in this 
 - schmeide.com (marketing site, Next.js static export): `~/github/schmeide/schmeide.com`. Clone from
   `https://github.com/schmeide/schmeide.com.git` if missing. Read `docs/ARCHITECTURE.md` first; it vendors the design
   skills in `.claude/skills/`.
+- factory (autobutler-org's software factory: one Go binary that takes work from a tracker, keeps its state in Postgres
+  and hands it to agent workers on Kubernetes; not a Schmeide repo): `~/github/schmeide/factory`. Clone from
+  `https://github.com/autobutler-org/factory.git` if missing. Read its AGENTS.md first; its commit style prefixes an
+  issue number.
 - iac (Azure infrastructure: Terraform, Bicep bootstrap, Argo CD): `~/github/schmeide/iac`. Clone from
   `https://github.com/schmeide/iac.git` if missing. The subscription is live: never run an apply or a mutating `az`
   command unless asked in that message.
